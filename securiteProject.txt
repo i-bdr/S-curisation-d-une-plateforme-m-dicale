@@ -1,0 +1,26 @@
+
+
+**Documentation de l'Application**
+
+Le processus débute dans l'interface de création, où des principes de cryptographie sont appliqués à l'aide de la bibliothèque Fernet. Fernet utilise l'algorithme AES (Advanced Encryption Standard) en mode CBC (Cipher Block Chaining) pour chiffrer les mots de passe des utilisateurs. Lorsque l'utilisateur saisit un mot de passe, celui-ci est d'abord chiffré pour garantir sa sécurité. Le mot de passe chiffré est ensuite stocké dans la base de données.
+
+Après la création de l'utilisateur, l'interface d'authentification utilise des principes tels que le SFA (Single Factor Authentication) pour valider l'identité de l'utilisateur. Lors de la connexion, le mot de passe saisi par l'utilisateur est chiffré avec la même méthode que celle utilisée lors de sa création. Si les mots de passe correspondent, l'utilisateur est authentifié avec succès.
+
+Pour renforcer la sécurité, le système limite le nombre de tentatives de connexion. Après plusieurs tentatives infructueuses, un délai de blocage est introduit pour prévenir les attaques par force brute, rendant l'accès non autorisé aux comptes utilisateurs plus difficile.
+
+Après s'être connecté, l'utilisateur a accès à sa messagerie, où il peut discuter avec un autre utilisateur simultanément. Pour cela, les deux utilisateurs doivent s'authentifier mutuellement en utilisant l'algorithme de Diffie-Hellman. Dans un premier temps, les valeurs de n et g, préalablement fixées par l'administrateur et enregistrées dans un fichier `constants.txt`, seront chargées. Chaque utilisateur saisira ensuite sa clé privée x. Le programme calculera alors X', qui sera enregistré dans un fichier texte. Chaque utilisateur chargera le fichier X' de l'autre, permettant ainsi de calculer la clé secrète K'. Ce calcul établit une clé partagée entre les deux utilisateurs. Les deux clés K' seront enregistrées dans un fichier texte et chargées mutuellement. On comparera alors les deux clés : si elles sont identiques, l'authentification est réussie et le bouton d'accès à la discussion sera activé.
+
+---
+
+**Définitions des Principes Utilisés :**
+
+1. **AES (Advanced Encryption Standard)** : Un algorithme de chiffrement symétrique qui sécurise les données en utilisant des clés de 128, 192 ou 256 bits. AES est largement utilisé dans le monde entier pour protéger les informations sensibles.
+
+2. **CBC (Cipher Block Chaining)** : Un mode de fonctionnement pour les algorithmes de chiffrement qui améliore la sécurité en liant chaque bloc chiffré au bloc précédent. Cela signifie que le même texte en clair produira des sorties différentes à chaque chiffrement, rendant plus difficile le déchiffrement par des attaquants.
+
+3. **Authentification SFA (Single Factor Authentication)** : Un processus d'authentification où un seul facteur est utilisé pour vérifier l'identité de l'utilisateur. Cela implique généralement un mot de passe, qui est lié à l'adresse e-mail de l'utilisateur.
+
+4. **Authentification 2FA (Two-Factor Authentication)** : Une méthode de sécurité qui nécessite deux formes d'identification pour accéder à un compte, souvent un mot de passe (facteur de connaissance) et un code OTP (One-Time Password) envoyé sur le téléphone de l'utilisateur (facteur de possession).( on l'a pas utilisé mais c'est bon a savoir ) 
+
+5. **Protection contre les attaques par force brute et limitation de taux** : Un ensemble de mesures de sécurité qui limite le nombre de tentatives de connexion. Après un certain nombre de tentatives échouées, un délai de blocage est introduit pour empêcher les attaquants de deviner les mots de passe par essais successifs.
+
